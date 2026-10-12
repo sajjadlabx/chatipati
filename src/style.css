@@ -1,0 +1,60 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&display=swap');
+
+* {
+  font-family: 'Vazirmatn', sans-serif;
+}
+
+:root {
+  --text: #655D73;
+  --text-h: #211A32;
+  --bg: #FFFFFF;
+  --border: #E8E3F0;
+  --code-bg: #F3EFFB;
+
+  --accent: #7546F6;
+  /* --accent-bg: rgba(117, 70, 246, 0.10); */
+   --accent-bg: rgba(237, 236, 239, 0.931); 
+  --accent-border: rgba(117, 70, 246, 0.45);
+
+  --social-bg: #F7F5FC;
+  --shadow:
+    rgba(64, 35, 120, 0.10) 0 10px 15px -3px,
+    rgba(64, 35, 120, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #C2B9D2;
+    --text-h: #F5F0FF;
+    --bg: #f0f0f5;
+    --border: #342A46;
+    --code-bg: #211B2D;
+
+    --accent: #B69AFF;
+    --accent-bg: rgba(182, 154, 255, 0.14);
+    --accent-border: rgba(182, 154, 255, 0.50);
+
+    --social-bg: rgba(54, 43, 72, 0.65);
+    --shadow:
+      rgba(0, 0, 0, 0.35) 0 10px 15px -3px,
+      rgba(0, 0, 0, 0.20) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
