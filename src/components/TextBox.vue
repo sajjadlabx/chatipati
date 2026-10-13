@@ -1,7 +1,14 @@
 <script setup>
+import { computed, ref } from 'vue'
 import { Icon } from '@iconify/vue'
 
+const message = ref('')
 
+const iconName = computed(() => {
+  return message.value.trim()
+    ? 'lucide:arrow-up'
+    : 'lucide:mic'
+})
 </script>
 
 <template>
@@ -16,6 +23,7 @@ import { Icon } from '@iconify/vue'
     >
       <textarea
         name="promptarea"
+        v-model="message"
         id="promptarea"
         placeholder="اینجا بنویسید..."
         rows="1"
@@ -38,7 +46,7 @@ import { Icon } from '@iconify/vue'
                focus-visible:ring-offset-2
                cursor-pointer"
       >
-        <Icon icon="lucide:arrow-up" width="21" height="21" />
+        <Icon :icon="iconName" width="21" height="21" />
       </button>
     </form>
 
