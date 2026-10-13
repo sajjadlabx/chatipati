@@ -30,7 +30,6 @@ function selectConversation(id: number) {
     :class="isOpen ? 'w-64' : 'w-[68px]'"
     dir="rtl"
   >
-    <!-- Header -->
     <div class="flex h-16 items-center justify-between px-3">
       <span v-if="isOpen" class="text-xl font-bold tracking-tight">
         چاتی پاتی
@@ -48,7 +47,6 @@ function selectConversation(id: number) {
       </button>
     </div>
 
-    <!-- Main actions -->
     <div class="space-y-1 px-2 pt-2">
       <button
         type="button"
@@ -72,7 +70,6 @@ function selectConversation(id: number) {
       </button>
     </div>
 
-    <!-- Conversation history -->
     <div v-if="isOpen" class="mt-7 flex-1 overflow-y-auto px-3">
       <p class="mb-3 px-2 text-xs font-semibold text-gray-500">
         گفتگوهای اخیر
@@ -99,7 +96,6 @@ function selectConversation(id: number) {
 
     <div v-else class="flex-1"></div>
 
-    <!-- Bottom actions -->
     <div class="border-t border-gray-200 p-2">
       <button
         type="button"
