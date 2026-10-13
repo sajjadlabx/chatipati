@@ -1,7 +1,7 @@
 <script setup>
-import ChatPage from './components/ChatPage.vue'
+import TextBox from './components/TextBox.vue';
 </script>
 
 <template>
-  <ChatPage />
+  <TextBox />
 </template>
