@@ -11,34 +11,36 @@ function toggleSidebar() {
   sidebarOpen.value = !sidebarOpen.value
 }
 
-function changeTab(tab) {
-  activeTab.value = tab
-}
-
-function openHistory() {
-  // بعداً به تاریخچه گفت‌وگوها متصل می‌کنیم.
+function closeSidebar() {
+  sidebarOpen.value = false
 }
 </script>
 
 <template>
-  <div class="flex h-dvh flex-col overflow-hidden text-white md:flex-row">
-    <!-- Desktop sidebar -->
-    <AppSidebar class="hidden shrink-0 md:flex" />
+  <div class="relative flex h-dvh overflow-hidden bg-gray-50 text-gray-900">
+    <AppSidebar
+      :mobile-open="sidebarOpen"
+      @close="closeSidebar"
+    />
 
-    <!-- Main layout -->
-    <div class="flex min-h-0 min-w-0 flex-1 flex-col">
-      <!-- Mobile header -->
+    <button
+      v-if="sidebarOpen"
+      type="button"
+      aria-label="بستن سایدبار"
+      class="fixed inset-0 z-40 bg-black/20 backdrop-blur-[2px] md:hidden"
+      @click="closeSidebar"
+    />
+
+    <main class="relative flex min-w-0 flex-1 flex-col overflow-hidden">
       <MobileHeader
         :active-tab="activeTab"
         @toggle-sidebar="toggleSidebar"
-        @change-tab="changeTab"
-        @open-history="openHistory"
+        @change-tab="activeTab = $event"
       />
 
-      <!-- Chat content -->
-      <main class="relative flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden">
+      <div class="min-h-0 flex-1">
         <ChatPage />
-      </main>
-    </div>
+      </div>
+    </main>
   </div>
 </template>
