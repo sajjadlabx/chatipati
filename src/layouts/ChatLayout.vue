@@ -1,72 +1,58 @@
 <script setup>
-import { Icon } from '@iconify/vue'
+import { onBeforeUnmount, ref, watch } from 'vue'
+import AppSidebar from '../components/AppSidebar.vue'
+import MobileHeader from '../components/MobileHeader.vue'
+import ChatPage from '../pages/ChatPage.vue'
 
-defineProps({
-  activeTab: {
-    type: String,
-    default: 'chat',
-  },
+const activeTab = ref('chat')
+const sidebarOpen = ref(false)
+
+watch(sidebarOpen, (isOpen) => {
+  document.body.style.overflow = isOpen ? 'hidden' : ''
 })
 
-const emit = defineEmits([
-  'toggle-sidebar',
-  'change-tab',
-  'open-history',
-])
+function toggleSidebar() {
+  sidebarOpen.value = !sidebarOpen.value
+}
+
+function closeSidebar() {
+  sidebarOpen.value = false
+}
+
+onBeforeUnmount(() => {
+  document.body.style.overflow = ''
+})
 </script>
 
 <template>
-  <header
-    class="relative z-10 flex h-14 w-full shrink-0 items-center justify-between px-3 text-white md:hidden"
-    dir="ltr"
+  <div
+    dir="rtl"
+    class="relative flex h-dvh overflow-hidden bg-gray-50 text-gray-900"
   >
-    <button
-      type="button"
-      aria-label="باز کردن سایدبار"
-      class="flex size-9 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-white/10"
-      @click="emit('toggle-sidebar')"
-    >
-      <Icon icon="lucide:panel-left" width="20" height="20" />
-    </button>
-
-    <div class="flex shrink-0 items-center rounded-full bg-[#111] p-0.5">
-      <button
-        type="button"
-        :aria-pressed="activeTab === 'chat'"
-        class="flex h-9 min-w-[76px] items-center justify-center rounded-full px-4 text-sm transition-colors"
-        :class="
-          activeTab === 'chat'
-            ? 'bg-[#202020] text-white'
-            : 'text-white/45 hover:text-white/75'
-        "
-        @click="emit('change-tab', 'chat')"
-      >
-        Chat
-      </button>
-
-      <button
-        type="button"
-        :aria-pressed="activeTab === 'work'"
-        class="flex h-9 min-w-[76px] items-center justify-center gap-1 rounded-full px-4 text-sm transition-colors"
-        :class="
-          activeTab === 'work'
-            ? 'bg-[#202020] text-white'
-            : 'text-white/45 hover:text-white/75'
-        "
-        @click="emit('change-tab', 'work')"
-      >
-        <Icon icon="lucide:sparkles" width="14" height="14" />
-        Work
-      </button>
-    </div>
+    <AppSidebar
+      :mobile-open="sidebarOpen"
+      @close="closeSidebar"
+    />
 
     <button
+      v-if="sidebarOpen"
       type="button"
-      aria-label="باز کردن تاریخچه"
-      class="flex size-9 shrink-0 items-center justify-center rounded-lg transition-colors hover:bg-white/10"
-      @click="emit('open-history')"
-    >
-      <Icon icon="lucide:message-circle" width="20" height="20" />
-    </button>
-  </header>
+      aria-label="بستن منوی کناری"
+      class="fixed inset-0 z-40 bg-gray-950/20 backdrop-blur-[2px] md:hidden"
+      @click="closeSidebar"
+    />
+
+    <main class="relative flex min-w-0 flex-1 flex-col overflow-hidden">
+      <MobileHeader
+        :active-tab="activeTab"
+        @toggle-sidebar="toggleSidebar"
+        @change-tab="activeTab = $event"
+        @open-history="closeSidebar"
+      />
+
+      <div class="min-h-0 flex-1">
+        <ChatPage />
+      </div>
+    </main>
+  </div>
 </template>
