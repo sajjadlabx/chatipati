@@ -37,11 +37,9 @@ function selectConversation(id: number) {
     id="app-sidebar"
     class="fixed inset-y-0 right-0 z-50 flex h-dvh w-72 shrink-0 flex-col bg-[#f9f9f9]
            text-gray-800 shadow-2xl transition-transform duration-300
-           md:relative md:z-auto md:h-screen md:w-auto md:shadow-none md:transition-all"
-    :class="[
-      isOpen ? 'md:w-64' : 'md:w-[68px]',
-      mobileOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0',
-    ]"
+           md:relative md:z-auto md:h-screen md:w-[var(--sidebar-width)] md:shadow-none md:transition-all"
+    :style="{ '--sidebar-width': isOpen ? '16rem' : '68px' }"
+    :class="mobileOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0'"
     dir="rtl"
   >
     <div class="flex h-16 shrink-0 items-center justify-between px-3">
