@@ -1,7 +1,14 @@
-
 <script setup lang="ts">
 import { ref } from 'vue'
 import { Icon } from '@iconify/vue'
+
+defineProps<{
+  mobileOpen: boolean
+}>()
+
+const emit = defineEmits<{
+  close: []
+}>()
 
 const isOpen = ref(true)
 
@@ -16,32 +23,49 @@ const activeConversation = ref<number | null>(1)
 
 function newChat() {
   activeConversation.value = null
+  emit('close')
 }
 
 function selectConversation(id: number) {
   activeConversation.value = id
+  emit('close')
 }
 </script>
 
 <template>
   <aside
-    class="flex h-screen shrink-0 flex-col bg-[#f9f9f9]
-           text-gray-800 transition-all duration-300"
-    :class="isOpen ? 'w-64' : 'w-[68px]'"
+    id="app-sidebar"
+    class="fixed inset-y-0 right-0 z-50 flex h-dvh w-72 shrink-0 flex-col bg-[#f9f9f9]
+           text-gray-800 shadow-2xl transition-transform duration-300
+           md:relative md:z-auto md:h-screen md:w-auto md:shadow-none md:transition-all"
+    :class="[
+      isOpen ? 'md:w-64' : 'md:w-[68px]',
+      mobileOpen ? 'translate-x-0' : 'translate-x-full md:translate-x-0',
+    ]"
     dir="rtl"
   >
-    <div class="flex h-16 items-center justify-between px-3">
+    <div class="flex h-16 shrink-0 items-center justify-between px-3">
       <span v-if="isOpen" class="text-xl font-bold tracking-tight">
         چاتی پاتی
       </span>
 
       <button
         type="button"
-        aria-label="باز و بسته کردن سایدبار"
+        aria-label="بستن سایدبار"
+        class="flex h-10 w-10 items-center justify-center rounded-xl
+               text-gray-600 transition hover:bg-gray-200 md:hidden"
+        @click="emit('close')"
+      >
+        <Icon icon="lucide:x" width="21" height="21" />
+      </button>
+
+      <button
+        type="button"
+        aria-label="جمع یا باز کردن سایدبار"
+        :aria-expanded="isOpen"
         @click="isOpen = !isOpen"
-        class="flex h-10 w-10 items-center justify-center
-               rounded-xl text-gray-600 transition
-               hover:bg-gray-200"
+        class="hidden h-10 w-10 items-center justify-center
+               rounded-xl text-gray-600 transition hover:bg-gray-200 md:flex"
       >
         <Icon icon="lucide:panel-left" width="21" height="21" />
       </button>
